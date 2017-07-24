@@ -1,11 +1,11 @@
-var mongoose = required('mongoose');
+var mongoose = require('mongoose');
 
 var AnimalSchema = mongoose.Schema({
 	name: {
 		type: String,
 		uniquie: true,
-		required: true	
-	}
+		required: true
+	},
 	kind: String,
 	age: Number,
 	nourished_at: Date,
