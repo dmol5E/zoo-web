@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Zoo Application</title>
+</head>
+<body ng-app="app" ng-controller="AnimalController">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-route.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-resource.js"></script>
+	<script src="/release/ui-grid.min.js"></script>
+	<link rel="styleSheet" href="release/ui-grid.min.css"/>
+	<script src="/scripts/animals.js"></script>
+	<div ng-controller="AnimalController">
+		<h1>Animals List:</h1>
+		<div ui-grid="gridOptions"></div>
+	</div>
+	<!--
+	<table>
+		<thead>
+			<td>Name</td>
+			<td>Kind</td>
+			<td>Nouraished At</td>
+			<td>Age</td>
+			<td>Cage</td>
+			<td>Keeper</td>
+		</thead>
+		<tr ng-repeat="animal in animals">
+			<td>{{ animal.name }}</td>
+			<td>{{ animal.kind }}</td>
+			<td>{{ animal.nouraished_at }}</td>
+			<td>{{ animal.age }}</td>
+			<td>{{ animal.cage }}</td>
+			<td>{{ animal.keeper}}</td>
+		</tr>
+	</table>
+	-->
+</body>
+</html>

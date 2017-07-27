@@ -12,9 +12,11 @@ exports.findAll = function() {
 };
 
 exports.createAnimal = function (animalData) {
-	/**var Animal ({
+	var animal = {
 		name: animalData.name,
 		kind: animalData.kind,
-
-	})**/
-}
+		age: animalData.age,
+		cage: animalData.cage,
+	};
+	return new Animal(animal).save();
+};

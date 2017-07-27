@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var animals = require('./routes/animals');
+var animal = require('./routes/animal.js');
 
 var app = express();
 
@@ -22,9 +23,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/release', express.static(path.join(__dirname, 'node_modules/angular-ui-grid/')));
 
 app.use('/', index);
 app.use('/animals', animals);
+app.use('/animal', animal);
 app.use('/users', users);
 
 // catch 404 and forward to error handler

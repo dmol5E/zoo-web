@@ -1,0 +1,1 @@
+curl -XPOST http://localhost/animals -d "name=Tiger&kind=None&age=5&&cage=1"

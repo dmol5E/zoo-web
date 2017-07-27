@@ -8,7 +8,10 @@ var AnimalSchema = mongoose.Schema({
 	},
 	kind: String,
 	age: Number,
-	nourished_at: Date,
+	nourished_at: {
+		type: Date,
+		default: Date.now,
+	},
 	cage: String,
 	keeper: [{
 		first_name: String,

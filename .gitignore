@@ -1,3 +1,11 @@
 # Dependency directory
 node_modules
 npm-debug.log
+
+# Eclipse project meta files
+.settings
+.project
+
+# Sublime project
+*.sublime-project
+*.sublime-workspace
