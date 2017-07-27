@@ -11,6 +11,10 @@ exports.findAll = function() {
 	return Animal.find({});
 };
 
+exports.findAllWithoutParams = function(params) {
+	return Animal.find({}).select(params);
+}
+
 exports.createAnimal = function (animalData) {
 	var animal = {
 		name: animalData.name,

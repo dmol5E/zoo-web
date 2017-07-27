@@ -12,6 +12,18 @@ router.get('/', function (req, res, next) {
 		});
 });
 
+router.get('/file', function (req, res, next) {
+	api.findAllWithoutParams('-_id')
+		.then(function(animals) {
+			res.attachment('animal.json');
+			res.send(animals);
+			res.end();
+		})
+		.catch(function(error) {
+			return next(error);
+		});
+});
+
 router.post('/', function(req, res, next) {
 	console.log('Create Animal');
 	api.createAnimal(req.body)
