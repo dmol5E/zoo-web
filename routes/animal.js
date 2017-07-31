@@ -1,8 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
-router.get('/', function(req, res, next) {
-	res.render('animal', { Title: 'Animal List'});
-});
+router.get('/',
+	function(req, res, next) {
+		res.render('animal', {
+			user: req.user
+		});
+	});
 
 module.exports = router;

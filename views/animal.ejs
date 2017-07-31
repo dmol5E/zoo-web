@@ -1,18 +1,30 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Zoo Application</title>
-</head>
-<body ng-app="app" ng-controller="AnimalController">
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-route.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-resource.js"></script>
-	<script src="/release/ui-grid.min.js"></script>
-	<link rel="styleSheet" href="release/ui-grid.min.css"/>
-	<script src="/scripts/animals.js"></script>
-	<div ng-controller="AnimalController">
-		<h1>Animals List:</h1>
-		<div ui-grid="gridOptions"></div>
-	</div>
-</body>
+	<head>
+		<% include ./partials/head %>
+	</head>
+	<body class="container" ng-app="app" ng-controller="AnimalController">
+		<header>
+			<% include ./partials/header %>
+		</header>
+		<main>
+			<div class="jumbotron">
+				<% if (user) { %>
+				<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.js"></script>
+				<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-route.js"></script>
+				<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-resource.js"></script>
+				<script src="/release/ui-grid.min.js"></script>
+				<link rel="styleSheet" href="release/ui-grid.min.css"/>
+				<script src="/scripts/animals.js"></script>
+				<div ng-controller="AnimalController">
+					<h1>Animals List:</h1>
+					<div ui-grid="gridOptions"></div>
+				</div>
+				<% } %>
+			</div>
+		</main>
+		<footer>
+			<% include ./partials/footer %>
+		</footer>
+	</body>
 </html>

@@ -1,0 +1,42 @@
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	<div class="container">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="#">
+				<span class="glyphicon glyphicon glyphicon-tree-deciuous"></span>
+				Zoo app
+			</a>
+		</div>
+		<div class="navbar-collapse collapse">
+			<ul class="nav navbar-nav">
+				<li><a href="/">Home</a></li>
+				<li><a href="/animal">Animal List</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<% if (!user) { %>
+				<li class="active">
+					<a href="/register">Sign in</a>
+				</li>
+				<li class="active"></li>
+				<li class="active">
+					<a href="/login">Sign up</a>
+				</li>
+				<!--
+				<form id="loginForm" class="navbar-form navbar-right" action="/register" method="post" role="form">
+					<div class="form-group">
+						<input type="text" name="username" placeholder="Login" class="form-control">
+					</div>
+					<div class="form-group">
+						<input type="password" name="password" placeholder="Password" class="form-control">
+					</div>
+					<button type="submit" class="btn btn-success">Sign in</button>
+				</form>
+				-->
+				<% } else { %>
+					<li class="active">
+						<a href="/logout">Logout</a>
+					</li>
+			<% } %>
+			</ul>
+		</div>
+	</div>
+</nav>

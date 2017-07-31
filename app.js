@@ -4,6 +4,14 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var passport = require('passport');
+var LocalStategy = require('passport-local').Strategy;
+
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/zoo')
+	.then(() => console.log('Connection to MongoDB succesful.'))
+	.catch((err) => console.error(err));
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -22,13 +30,26 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(require('express-session')({
+	secret: 'qwerty keyb',
+	resave: false,
+	saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/release', express.static(path.join(__dirname, 'node_modules/angular-ui-grid/')));
 
 app.use('/', index);
 app.use('/animals', animals);
-app.use('/animal', animal);
+app.use('/animal', isLoggedIn , animal);
 app.use('/users', users);
+
+// Passport config
+var User = require('./models/User');
+passport.use(new LocalStategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -47,5 +68,12 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+function isLoggedIn(req, res, next) {
+	if (req.isAuthenticated())
+		return next();
+
+	res.redirect('/error');
+}
 
 module.exports = app;

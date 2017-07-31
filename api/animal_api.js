@@ -1,10 +1,3 @@
-var mongoose = require('mongoose');
-
-mongoose.Promise = global.Promise;
-
-var db = mongoose.connect('mongodb://localhost/zoo')
-	.then(() => console.log('Connection to MongoDB succesful.'))
-		.catch((err) => console.error(err));
 var Animal = require('../models/Animal.js');
 
 exports.findAll = function() {
@@ -13,7 +6,7 @@ exports.findAll = function() {
 
 exports.findAllWithoutParams = function(params) {
 	return Animal.find({}).select(params);
-}
+};
 
 exports.createAnimal = function (animalData) {
 	var animal = {
