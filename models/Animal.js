@@ -13,10 +13,10 @@ var AnimalSchema = mongoose.Schema({
 		default: Date.now,
 	},
 	cage: String,
-	keeper: [{
+	keeper: {
 		first_name: String,
-		last_name: String
-	}]
+		name: String
+	}
 });
 
 module.exports = mongoose.model('Animal', AnimalSchema);

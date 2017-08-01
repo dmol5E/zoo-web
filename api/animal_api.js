@@ -8,6 +8,10 @@ exports.findAllWithoutParams = function(params) {
 	return Animal.find({}).select(params);
 };
 
+exports.findById = function(id) {
+	return Animal.findById(id);
+};
+
 exports.createAnimal = function (animalData) {
 	var animal = {
 		name: animalData.name,
@@ -17,3 +21,7 @@ exports.createAnimal = function (animalData) {
 	};
 	return new Animal(animal).save();
 };
+
+exports.deleteAnimal = function(animalId, animalData) {
+	return Animal.findByIdAndRemove(animalId, animalData);
+}
