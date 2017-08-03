@@ -6,12 +6,8 @@ var AnimalSchema = mongoose.Schema({
 		uniquie: true,
 		required: true
 	},
-	kind: String,
+	species: String,
 	age: Number,
-	nourished_at: {
-		type: Date,
-		default: Date.now,
-	},
 	cage: String,
 	keeper: {
 		first_name: String,

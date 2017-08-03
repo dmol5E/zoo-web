@@ -13,23 +13,19 @@
  		});
  		$scope.gridOptions = {
  			columnDefs: [{
- 				name: 'Name',
+ 				name: 'Имя',
  				field: 'name'
  			}, {
- 				name: 'Kind',
- 				field: 'kind'
+ 				name: 'Вид',
+ 				field: 'species'
  			}, {
- 				name: 'Nourished At',
- 				field: 'nourished_at',
- 				type: 'date'
- 			}, {
- 				name: 'Age',
+ 				name: 'Возраст',
  				field: 'age'
  			}, {
- 				name: 'Cage',
+ 				name: 'Клетка',
  				field: 'cage'
  			}, {
- 				name: 'Keeper',
+ 				name: 'Смотритель',
  				field: 'fullname()'
  			}, ],
  			data: 'animals'

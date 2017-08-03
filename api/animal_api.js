@@ -15,7 +15,7 @@ exports.findById = function(id) {
 exports.createAnimal = function (animalData) {
 	var animal = {
 		name: animalData.name,
-		kind: animalData.kind,
+		species: animalData.species,
 		age: animalData.age,
 		cage: animalData.cage,
 	};
@@ -24,4 +24,4 @@ exports.createAnimal = function (animalData) {
 
 exports.deleteAnimal = function(animalId, animalData) {
 	return Animal.findByIdAndRemove(animalId, animalData);
-}
+};

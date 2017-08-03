@@ -7,11 +7,11 @@ mongoose.connect('mongodb://localhost/zoo')
 	.catch((err) => console.error(err));
 
 var animals = [
-	new Animal({ name: 'Lion', kind: 'Mammals', age: 5, cage: '#1', keeper: { first_name: 'Lee', name: 'Dmitrii'}}),
-	new Animal({ name: 'Hippo', kind: 'Mammals', age: 4, cage: '#1', keeper: { first_name: 'Rogers', name: 'Jhon'}}),
-	new Animal({ name: 'Giraffe', kind: 'Mammals', age: 1, cage: '#2', keeper: { first_name: 'Montgomery', name: 'William'}}),
-	new Animal({ name: 'Zebra', kind: 'Mammals', age: 2, cage: '#3', keeper: { first_name: 'Lee', name: 'Dmitrii'}}),
-	new Animal({ name: 'Penguin', kind: 'Birds', age: 1, cage: '#4', keeper: { first_name: 'Rogers', name: 'Jhon'}}),
+	new Animal({ name: 'Алекс', species: 'Лев', age: 5, cage: '#1', keeper: { first_name: 'Lee', name: 'Dmitrii'}}),
+	new Animal({ name: 'Глория', species: 'Бегемот', age: 4, cage: '#1', keeper: { first_name: 'Rogers', name: 'Jhon'}}),
+	new Animal({ name: 'Мелман', species: 'Жираф', age: 1, cage: '#2', keeper: { first_name: 'Montgomery', name: 'William'}}),
+	new Animal({ name: 'Мартин', species: 'Зебра', age: 2, cage: '#3', keeper: { first_name: 'Lee', name: 'Dmitrii'}}),
+	new Animal({ name: 'Шкипер', species: 'Пингвин', age: 1, cage: '#4', keeper: { first_name: 'Rogers', name: 'Jhon'}}),
 	];
 
 Animal.remove({}, function(err) {});
