@@ -1,0 +1,12 @@
+[{
+	"name": "Рамси",
+	"species": "Лев",
+	"age": 1,
+	"cage": "#1",
+	"keeper": {
+		"first_name": "Marmont",
+		"name": "Jorah",
+		"__v": 0
+	},
+	"__v": 0
+}]

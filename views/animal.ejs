@@ -26,6 +26,9 @@
 						<p class="pull-right">
 							<a class="btn btn-primary btn-lg" role="button" href="/export" >Download</a>
 						</p>
+						<p class="pull-right">
+							<button type="button" class="btn btn-primary btn-lg" role="button" ng-click="import()">Import</button>
+						</p>
 					</div>
 					<div ui-grid="gridOptions" ui-grid-selection></div>
 					<div>
@@ -75,6 +78,16 @@
   						Success!
 					</div>
 					<button type="button" class="btn btn-success" ng-click="updateKeeper()">Save</button>
+				</script>
+
+				<script type="text/ng-template" id="/import.html">
+					<form ref="uploadForm" id="uploadForm" action="/animals/import" method="POST" enctype="multipart/form-data">
+						<div class="form-group">
+							<label for="animalFile">Файл:</label>
+							<input id="animalFile" type="file" class="form-control" name="import">
+						</div>
+						<button type="submit" class="btn btn-success">Import</button>
+					</form>
 				</script>
 				<% } %>
 			</div>

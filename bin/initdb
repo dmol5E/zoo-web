@@ -2,34 +2,79 @@ var mongoose = require('mongoose');
 var Keeper = require('../models/Keeper');
 var Animal = require('../models/Animal');
 
+mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/zoo')
 	.then(() => console.log('Connection to MongoDB succesful.'))
 	.catch((err) => console.error(err));
 
-var keepers = [
-	new Keeper({ first_name: 'Lee', name: 'Dmitrii'}),
-	new Keeper({ first_name: 'Rogers', name: 'Jhon'}),
-	new Keeper({ first_name: 'Montgomery', name: 'William'})
-];
+var keepers = [{
+	first_name: 'Lee',
+	name: 'Dmitrii'
+}, {
+	first_name: 'Rogers',
+	name: 'Jhon'
+}, {
+	first_name: 'Montgomery',
+	name: 'William'
+}];
 
 Keeper.remove({}, function(err) {});
-keepers.forEach( function(element, index, array) {
-	element.save();
-});
+Keeper.insertMany(keepers)
+	.then(function(item) {
+		console.log('Inserted: ' + item);
+		keepers = item;
+		insertAnimals();
+	})
+	.catch(function(err) {
+		console.log(err);
+	});
 
 
-var animals = [
-	new Animal({ name: 'Алекс', species: 'Лев', age: 5, cage: '#1', keeper: keepers[0] }),
-	new Animal({ name: 'Глория', species: 'Бегемот', age: 4, cage: '#1', keeper: keepers[1]}),
-	new Animal({ name: 'Мелман', species: 'Жираф', age: 1, cage: '#2', keeper: keepers[2]}),
-	new Animal({ name: 'Мартин', species: 'Зебра', age: 2, cage: '#3', keeper: keepers[0]}),
-	new Animal({ name: 'Шкипер', species: 'Пингвин', age: 1, cage: '#4', keeper: keepers[1]}),
-	];
+var insertAnimals = function() {
+	var animals = [{
+		name: 'Алекс',
+		species: 'Лев',
+		age: 5,
+		cage: '#1',
+		keeper: keepers[0]._id
+	}, {
+		name: 'Глория',
+		species: 'Бегемот',
+		age: 4,
+		cage: '#1',
+		keeper: keepers[1]._id
+	}, {
+		name: 'Мелман',
+		species: 'Жираф',
+		age: 1,
+		cage: '#2',
+		keeper: keepers[2]._id
+	}, {
+		name: 'Мартин',
+		species: 'Зебра',
+		age: 2,
+		cage: '#3',
+		keeper: keepers[0]._id
+	}, {
+		name: 'Шкипер',
+		species: 'Пингвин',
+		age: 1,
+		cage: '#4',
+		keeper: keepers[1]._id
+	}, ];
 
-Animal.remove({}, function(err) {});
+	Animal.remove({}, function(err) {
+		console.log(err);
+	});
 
-animals.forEach(function (element, index, array) {
-	element.save();
-});
-
-mongoose.connection.close();
+	Animal.insertMany(animals)
+		.then(function(result) {
+			console.log('Animal Insert result: ' + result);
+			mongoose.connection.close()
+		})
+		.catch(function(err) {
+			console.log(err);
+			mongoose.connection.close()
+		});
+	return;
+}

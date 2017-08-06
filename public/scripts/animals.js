@@ -45,6 +45,7 @@
  		$scope.animals.$promise.then(function(value) {
  			angular.forEach(value, function(row) {
  				row.fullname = function() {
+ 					console.log(row.keeper);
  					return row.keeper.name + ' ' + row.keeper.first_name;
  				};
  			});
@@ -60,6 +61,10 @@
 
  		$scope.changeKeeper = function() {
  			$location.path('/change/' + $scope.currentAnimal()[0]._id);
+ 		};
+
+ 		$scope.import = function() {
+ 			$location.path('/import');
  		};
  	}])
  	.controller('ChangeKeeperController', ['$scope', '$routeParams', 'Animals', 'Keepers', function($scope, $routeParams, Animals, Keepers) {
@@ -83,6 +88,9 @@
  			$scope.keeper = item;
  		};
  	}])
+ 	.controller('ImportAnimalController', ['$scope', function($scope) {
+
+ 	}])
  	.config(['$routeProvider', function($routeProvider) {
  		$routeProvider
  			.when('/', {
@@ -92,5 +100,9 @@
  			.when('/change/:id', {
  				templateUrl: '/changeKeeper.html',
  				controller: 'ChangeKeeperController'
+ 			})
+ 			.when('/import', {
+ 				templateUrl: '/import.html',
+ 				controller: 'ImportAnimalController'
  			});
  	}]);

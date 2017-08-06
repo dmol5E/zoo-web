@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var LocalStategy = require('passport-local').Strategy;
+var fileUpload = require('express-fileupload');
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/zoo')
@@ -38,6 +39,7 @@ app.use(require('express-session')({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(fileUpload());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/release', express.static(path.join(__dirname, 'node_modules/angular-ui-grid/')));
 app.use('/release', express.static(path.join(__dirname, 'node_modules/ui-select/dist/')));

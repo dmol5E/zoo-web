@@ -3,7 +3,7 @@ var express = require('express');
 var router = express.Router();
 
 /* GET /animals */
-router.get('/', function (req, res, next) {
+router.get('/', function(req, res, next) {
 	api.findAll()
 		.then(function(animals) {
 			res.json(animals);
@@ -22,6 +22,29 @@ router.post('/', function(req, res, next) {
 		.catch(function(error) {
 			return next(error);
 		});
+});
+
+router.post('/import', function(req, res, next) {
+	var response = [];
+	var errors = [];
+	console.log('req.body: ' + JSON.stringify(req.body));
+	api.importAnimals(req.files.import)
+		.then(function(animals) {
+			res.json(animals);
+		})
+		.catch(function(error) {
+			console.error(error);
+			return next(error);
+		});
+	/*.forEach( function(element, index) {
+		console.log(element);
+		element.then(function(animal) {
+			response.push(animal);
+		})
+		.catch(function(error) {
+			errors.push(error);
+		});
+	});*/
 });
 
 router.get('/keepers/', function(req, res, next) {
