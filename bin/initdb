@@ -1,17 +1,29 @@
 var mongoose = require('mongoose');
+var Keeper = require('../models/Keeper');
 var Animal = require('../models/Animal');
-
 
 mongoose.connect('mongodb://localhost/zoo')
 	.then(() => console.log('Connection to MongoDB succesful.'))
 	.catch((err) => console.error(err));
 
+var keepers = [
+	new Keeper({ first_name: 'Lee', name: 'Dmitrii'}),
+	new Keeper({ first_name: 'Rogers', name: 'Jhon'}),
+	new Keeper({ first_name: 'Montgomery', name: 'William'})
+];
+
+Keeper.remove({}, function(err) {});
+keepers.forEach( function(element, index, array) {
+	element.save();
+});
+
+
 var animals = [
-	new Animal({ name: 'Алекс', species: 'Лев', age: 5, cage: '#1', keeper: { first_name: 'Lee', name: 'Dmitrii'}}),
-	new Animal({ name: 'Глория', species: 'Бегемот', age: 4, cage: '#1', keeper: { first_name: 'Rogers', name: 'Jhon'}}),
-	new Animal({ name: 'Мелман', species: 'Жираф', age: 1, cage: '#2', keeper: { first_name: 'Montgomery', name: 'William'}}),
-	new Animal({ name: 'Мартин', species: 'Зебра', age: 2, cage: '#3', keeper: { first_name: 'Lee', name: 'Dmitrii'}}),
-	new Animal({ name: 'Шкипер', species: 'Пингвин', age: 1, cage: '#4', keeper: { first_name: 'Rogers', name: 'Jhon'}}),
+	new Animal({ name: 'Алекс', species: 'Лев', age: 5, cage: '#1', keeper: keepers[0] }),
+	new Animal({ name: 'Глория', species: 'Бегемот', age: 4, cage: '#1', keeper: keepers[1]}),
+	new Animal({ name: 'Мелман', species: 'Жираф', age: 1, cage: '#2', keeper: keepers[2]}),
+	new Animal({ name: 'Мартин', species: 'Зебра', age: 2, cage: '#3', keeper: keepers[0]}),
+	new Animal({ name: 'Шкипер', species: 'Пингвин', age: 1, cage: '#4', keeper: keepers[1]}),
 	];
 
 Animal.remove({}, function(err) {});

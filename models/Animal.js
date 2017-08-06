@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+var Keeper = require('./Keeper');
 
-var AnimalSchema = mongoose.Schema({
+var AnimalSchema = Schema({
 	name: {
 		type: String,
 		uniquie: true,
@@ -9,10 +11,7 @@ var AnimalSchema = mongoose.Schema({
 	species: String,
 	age: Number,
 	cage: String,
-	keeper: {
-		first_name: String,
-		name: String
-	}
+	keeper: { type: Schema.ObjectId, ref: 'Keeper'}
 });
 
 module.exports = mongoose.model('Animal', AnimalSchema);

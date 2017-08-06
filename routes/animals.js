@@ -13,17 +13,6 @@ router.get('/', function (req, res, next) {
 		});
 });
 
-/* GET /animals/:id */
-router.get('/:id', function(req, res, next) {
-	api.findById()
-		.then(function(animal) {
-			res.json(animal);
-		})
-		.catch(function(error) {
-			return next(error);
-		});
-});
-
 /* POST /animals/:id */
 router.post('/', function(req, res, next) {
 	api.createAnimal(req.body)
@@ -35,24 +24,44 @@ router.post('/', function(req, res, next) {
 		});
 });
 
-/* DELETE /animals/:id */
-router.delete('/:id', function(req, res, next) {
-	api.deleteAnimal(req.params.id, req.body)
-		.then(function(post) {
-			res.json(post);
+router.get('/keepers/', function(req, res, next) {
+	api.getAllKeepers()
+		.then(function(keepers) {
+			res.json(keepers);
 		})
 		.catch(function(error) {
 			return next(error);
 		});
 });
 
-/* GET /animals/file */
-router.get('/file', function (req, res, next) {
-	api.findAllWithoutParams('-_id')
-		.then(function(animals) {
-			res.attachment('animal.json');
-			res.send(animals);
-			res.end();
+
+/* GET /animals/:id */
+router.get('/:id', function(req, res, next) {
+	api.findById(req.params.id)
+		.then(function(animal) {
+			res.json(animal);
+		})
+		.catch(function(error) {
+			return next(error);
+		});
+});
+
+router.put('/:id', function(req, res, next) {
+	api.findByIdAndUpdate(req.params.id, req.body)
+		.then(function(post) {
+			res.json(post);
+		})
+		.catch(function(error) {
+			console.error(error);
+			return next(error);
+		});
+});
+
+/* DELETE /animals/:id */
+router.delete('/:id', function(req, res, next) {
+	api.deleteAnimal(req.params.id, req.body)
+		.then(function(post) {
+			res.json(post);
 		})
 		.catch(function(error) {
 			return next(error);

@@ -13,40 +13,68 @@
 				<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.js"></script>
 				<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-route.js"></script>
 				<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-resource.js"></script>
+				<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-sanitize.js"></script>
 				<script src="/release/ui-grid.min.js"></script>
+				<script src="/release/select.min.js"></script>
 				<link rel="styleSheet" href="release/ui-grid.min.css"/>
+				<link rel="styleSheet" href="release/select.min.css"/>
 				<script src="/scripts/animals.js"></script>
-				<div ng-controller="AnimalController">
+				<ng-view></ng-view>
+				<script type="text/ng-template" id='/view.html'>
 					<div class="container">
 						<h3>Animals List:</h3>
 						<p class="pull-right">
-							<a class="btn btn-primary btn-lg" role="button" href="/animals/file" >Download</a>
+							<a class="btn btn-primary btn-lg" role="button" href="/export" >Download</a>
 						</p>
 					</div>
 					<div ui-grid="gridOptions" ui-grid-selection></div>
-					<button type="button" class="btn btn-success" ng-click="selectedLog()">Show selected</button>
-				</div>
-				<script type="text/ng-template" id='/new.html'>
+					<div>
+						<button type="button" class="btn btn-success" ng-click="changeKeeper()">Назначить смотрителя</button>
+						<button type="button" class="btn btn-success" ng-click="">Назначить клетку</button>
+					</div>
+				</script>
+				<script type="text/ng-template" id='/changeKeeper.html'>
 					<!-- Name -->
 					<div class="input-group">
-						<span class="input-group-addon">Name</span>
-						<input type="text" class="form-control" name="name">
+						<label for="animalName">Имя:</label>
+						<input id="animalName" type="text" class="form-control" ng-model="animal.name" name="name" disabled>
 					</div>
 					<!-- Species -->
 					<div class="input-group">
-						<span class="input-group-addon"></span>
-						<input type="text" class="form-control" name="">
+						<label for="keeperSpecies">Вид:</label>
+						<input id="animalSpecies" type="text" class="form-control" ng-model="animal.species" name="" disabled>
 					</div>
 					<!-- Age -->
 					<div class="input-group">
-						<span class="input-group-addon"></span>
-						<input type="text" class="form-control" name="">
+						<label for="keeperAge">Возраст:</label>
+						<input id="animalAge" type="text" class="form-control" ng-model="animal.age" name="" disabled>
 					</div>
 					<!-- Cage -->
 					<div class="input-group">
-						<span class="input-group-addon"></span>
-						<input type="text" class="form-control" name="">
+						<label for="animalCage">Клетка:</label>
+						<input id="animalCage" type="text" class="form-control" ng-model="animal.cage" name="" disabled>
 					</div>
+					<div class="form-group">
+						<label for="animalKeeper">Смотритель:</label>
+						<div id="animalKeeper" class="selectContainer">
+							<ui-select ng-model="keeper._id" on-select="OnClickSelect($item)" theme="bootstrap">
+								<ui-select-match placeholder="Select keeper...">
+								{{ $select.selected.name }} {{ $select.selected.first_name }}
+								</ui-select-match>
+								<ui-select-choices repeat="keeper in keepers">
+								{{ keeper.name }} {{ keeper.first_name }}</ui-select-choices>
+							</ui-select>
+						</div>
+					</div>
+					<div id="success-block" class="alert alert-success alert-dismissible" role="alert" hidden="true">
+  						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  						Success!
+					</div>
+					<div id="error-block" class="alert alert-danger alert-dismissible" role="alert" hidden="true">
+  						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  						Success!
+					</div>
+					<button type="button" class="btn btn-success" ng-click="updateKeeper()">Save</button>
 				</script>
 				<% } %>
 			</div>

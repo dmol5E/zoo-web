@@ -1,8 +1,15 @@
- angular.module('app', ['ngRoute', 'ngResource', 'ui.grid', 'ui.grid.selection'])
+ angular.module('app', ['ngRoute', 'ngResource', 'ui.grid', 'ui.grid.selection', 'ngSanitize', 'ui.select'])
  	.factory('Animals', ['$resource', function($resource) {
- 		return $resource('/animals/:id', null, null);
+ 		return $resource('/animals/:id', null, {
+ 			'update': {
+ 				method: 'PUT'
+ 			}
+ 		});
  	}])
- 	.controller('AnimalController', ['$scope', 'Animals', function($scope, Animals) {
+ 	.factory('Keepers', ['$resource', function($resource) {
+ 		return $resource('/animals/keepers', null, null);
+ 	}])
+ 	.controller('AnimalController', ['$scope', '$location', 'Animals', function($scope, $location, Animals) {
  		$scope.gridOptions = {
  			enableRowSelection: true,
  			enableRowHeaderSelection: false
@@ -46,4 +53,44 @@
  		$scope.selectedLog = function() {
  			console.log($scope.gridApi.selection.getSelectedRows());
  		};
+
+ 		$scope.currentAnimal = function() {
+ 			return $scope.gridApi.selection.getSelectedRows();
+ 		};
+
+ 		$scope.changeKeeper = function() {
+ 			$location.path('/change/' + $scope.currentAnimal()[0]._id);
+ 		};
+ 	}])
+ 	.controller('ChangeKeeperController', ['$scope', '$routeParams', 'Animals', 'Keepers', function($scope, $routeParams, Animals, Keepers) {
+ 		$scope.animal = Animals.get({
+ 			id: $routeParams.id
+ 		});
+ 		$scope.keepers = Keepers.query();
+
+ 		$scope.updateKeeper = function() {
+ 			$scope.animal.keeper = $scope.keeper;
+ 			Animals.update({id: $scope.animal._id}, $scope.animal).$promise
+ 				.then(function (item) {
+ 					document.getElementById("success-block").hidden = false;
+ 				})
+ 				.catch(function (err) {
+ 					document.getElementById("error-block").hidden = false;
+ 				});
+ 		};
+
+ 		$scope.OnClickSelect = function(item) {
+ 			$scope.keeper = item;
+ 		};
+ 	}])
+ 	.config(['$routeProvider', function($routeProvider) {
+ 		$routeProvider
+ 			.when('/', {
+ 				templateUrl: '/view.html',
+ 				controller: 'AnimalController'
+ 			})
+ 			.when('/change/:id', {
+ 				templateUrl: '/changeKeeper.html',
+ 				controller: 'ChangeKeeperController'
+ 			});
  	}]);

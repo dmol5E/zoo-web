@@ -17,6 +17,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var animals = require('./routes/animals');
 var animal = require('./routes/animal.js');
+var expts = require('./routes/export.js');
 
 var app = express();
 
@@ -39,9 +40,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/release', express.static(path.join(__dirname, 'node_modules/angular-ui-grid/')));
+app.use('/release', express.static(path.join(__dirname, 'node_modules/ui-select/dist/')));
 
 app.use('/', index);
 app.use('/animals', animals);
+app.use('/export', expts);
 app.use('/animal', isLoggedIn , animal);
 app.use('/users', users);
 
@@ -66,6 +69,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
+  console.error(err.stack);
   res.render('error');
 });
 
