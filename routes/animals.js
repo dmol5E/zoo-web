@@ -36,15 +36,6 @@ router.post('/import', function(req, res, next) {
 			console.error(error);
 			return next(error);
 		});
-	/*.forEach( function(element, index) {
-		console.log(element);
-		element.then(function(animal) {
-			response.push(animal);
-		})
-		.catch(function(error) {
-			errors.push(error);
-		});
-	});*/
 });
 
 router.get('/keepers/', function(req, res, next) {
@@ -75,7 +66,6 @@ router.put('/:id', function(req, res, next) {
 			res.json(post);
 		})
 		.catch(function(error) {
-			console.error(error);
 			return next(error);
 		});
 });

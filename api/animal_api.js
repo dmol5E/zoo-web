@@ -57,7 +57,6 @@ exports.findByIdAndUpdate = function(id, animalData) {
 		cage: animalData.cage,
 		keeper: animalData.keeper
 	};
-	console.log('Updating Animal' + id + ': ' + animalData.keeper);
 	return Animal.findByIdAndUpdate(id, animal);
 };
 
