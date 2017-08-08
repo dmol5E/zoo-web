@@ -8,7 +8,12 @@ var UserSchema = mongoose.Schema({
 		required: true
 	},
 	password: String,
-	name: String
+	name: String,
+	role: {
+		type: String,
+		required: true,
+		default: 'Keeper'
+	}
 });
 
 UserSchema.plugin(passportLocalMongoose);

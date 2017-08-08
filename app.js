@@ -45,9 +45,10 @@ app.use('/release', express.static(path.join(__dirname, 'node_modules/angular-ui
 app.use('/release', express.static(path.join(__dirname, 'node_modules/ui-select/dist/')));
 
 app.use('/', index);
+app.use(isLoggedIn);
 app.use('/animals', animals);
 app.use('/export', expts);
-app.use('/animal', isLoggedIn , animal);
+app.use('/animal', animal);
 app.use('/users', users);
 
 // Passport config

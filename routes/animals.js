@@ -2,6 +2,15 @@ var api = require('../api/animal_api.js');
 var express = require('express');
 var router = express.Router();
 
+var isRoleZoolgist = function(req, res, next) {
+	if (!(req.user.role == 'Zoologist')) {
+		var error = new Error('Not authorized');
+		error.status = 401; // Unauthorized
+		return next(error);
+	}
+	next();
+};
+
 /* GET /animals */
 router.get('/', function(req, res, next) {
 	api.findAll()
@@ -14,7 +23,7 @@ router.get('/', function(req, res, next) {
 });
 
 /* POST /animals/:id */
-router.post('/', function(req, res, next) {
+router.post('/', isRoleZoolgist , function(req, res, next) {
 	api.createAnimal(req.body)
 		.then(function(animal) {
 			res.json(animal);
@@ -38,7 +47,7 @@ router.post('/import', function(req, res, next) {
 		});
 });
 
-router.get('/keepers/', function(req, res, next) {
+router.get('/keepers/', isRoleZoolgist, function(req, res, next) {
 	api.getAllKeepers()
 		.then(function(keepers) {
 			res.json(keepers);
@@ -60,7 +69,7 @@ router.get('/:id', function(req, res, next) {
 		});
 });
 
-router.put('/:id', function(req, res, next) {
+router.put('/:id', isRoleZoolgist, function(req, res, next) {
 	api.findByIdAndUpdate(req.params.id, req.body)
 		.then(function(post) {
 			res.json(post);

@@ -1,80 +1,142 @@
 var mongoose = require('mongoose');
+var passport = require('passport');
+var LocalStategy = require('passport-local').Strategy;
 var Keeper = require('../models/Keeper');
 var Animal = require('../models/Animal');
+var User = require('../models/User');
+
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/zoo')
 	.then(() => console.log('Connection to MongoDB succesful.'))
 	.catch((err) => console.error(err));
 
-var keepers = [{
-	first_name: 'Lee',
-	name: 'Dmitrii'
-}, {
-	first_name: 'Rogers',
-	name: 'Jhon'
-}, {
-	first_name: 'Montgomery',
-	name: 'William'
-}];
+// Passport config
+passport.use(new LocalStategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
-Keeper.remove({}, function(err) {});
-Keeper.insertMany(keepers)
-	.then(function(item) {
-		console.log('Inserted: ' + item);
-		keepers = item;
-		insertAnimals();
-	})
-	.catch(function(err) {
-		console.log(err);
+
+
+var UserKeeperInit = new Promise(function(resolve, reject) {
+
+	User.remove({
+		username: 'keeper'
+	}, function(err) {});
+	User.register(new User({
+		username: 'keeper',
+		name: 'Keeper',
+		role: 'Keeper'
+	}), '12345', function(err, user) {
+		if (err) {
+			reject(err);
+		} else {
+			resolve("User " + user.username + ' registered');
+		}
 	});
+});
 
+var UserZoologistInit = new Promise(function(resolve, reject) {
 
-var insertAnimals = function() {
-	var animals = [{
-		name: 'Алекс',
-		species: 'Лев',
-		age: 5,
-		cage: '#1',
-		keeper: keepers[0]._id
-	}, {
-		name: 'Глория',
-		species: 'Бегемот',
-		age: 4,
-		cage: '#1',
-		keeper: keepers[1]._id
-	}, {
-		name: 'Мелман',
-		species: 'Жираф',
-		age: 1,
-		cage: '#2',
-		keeper: keepers[2]._id
-	}, {
-		name: 'Мартин',
-		species: 'Зебра',
-		age: 2,
-		cage: '#3',
-		keeper: keepers[0]._id
-	}, {
-		name: 'Шкипер',
-		species: 'Пингвин',
-		age: 1,
-		cage: '#4',
-		keeper: keepers[1]._id
-	}, ];
-
-	Animal.remove({}, function(err) {
-		console.log(err);
+	User.remove({
+		username: 'zoologist'
+	}, function(err) {});
+	User.register(new User({
+		username: 'zoologist',
+		name: 'Zoologist',
+		role: 'Zoologist'
+	}), '54321', function(err, user) {
+		if (err) {
+			reject("Error register user: " + err);
+		} else {
+			resolve('User ' + user.name + ' registered');
+		}
 	});
+});
 
-	Animal.insertMany(animals)
-		.then(function(result) {
-			console.log('Animal Insert result: ' + result);
-			mongoose.connection.close()
+
+var keepersInit = new Promise(function(resolve, reject) {
+	var keepers = [{
+		first_name: 'Lee',
+		name: 'Dmitrii'
+	}, {
+		first_name: 'Rogers',
+		name: 'Jhon'
+	}, {
+		first_name: 'Montgomery',
+		name: 'William'
+	}];
+
+	Keeper.remove({}, function(err) {});
+	Keeper.insertMany(keepers)
+		.then(function(item) {
+			keepers = item;
+			resolve(item, 'Registered: ' + item);
 		})
 		.catch(function(err) {
-			console.log(err);
-			mongoose.connection.close()
+			reject('Fail during insert keepers: ' + err);
 		});
-	return;
-}
+});
+
+var animalsInit = new Promise(function(resolve, reject) {
+
+	keepersInit
+		.then(function(keepers, message) {
+			var animals = [{
+				name: 'Алекс',
+				species: 'Лев',
+				age: 5,
+				cage: '#1',
+				keeper: keepers[0]._id
+			}, {
+				name: 'Глория',
+				species: 'Бегемот',
+				age: 4,
+				cage: '#1',
+				keeper: keepers[1]._id
+			}, {
+				name: 'Мелман',
+				species: 'Жираф',
+				age: 1,
+				cage: '#2',
+				keeper: keepers[2]._id
+			}, {
+				name: 'Мартин',
+				species: 'Зебра',
+				age: 2,
+				cage: '#3',
+				keeper: keepers[0]._id
+			}, {
+				name: 'Шкипер',
+				species: 'Пингвин',
+				age: 1,
+				cage: '#4',
+				keeper: keepers[1]._id
+			}, ];
+
+			Animal.remove({}, function(err) {});
+
+			Animal.insertMany(animals)
+				.then(function(result) {
+					resolve(result);
+				})
+				.catch(function(err) {
+					reject('Fail during insert animals: ' + err);
+				});
+		})
+		.catch(function(err) {
+			reject(err);
+		});
+
+});
+
+Promise.all([keepersInit, animalsInit, UserZoologistInit, UserKeeperInit])
+	.then(function(item) {
+		mongoose.connection.close();
+		console.log(item);
+		console.log('Initalization completed!');
+	})
+	.catch(function(err) {
+		mongoose.connection.close();
+		console.error("Errors: " + err);
+	});

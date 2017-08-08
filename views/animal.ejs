@@ -31,11 +31,14 @@
 						</p>
 					</div>
 					<div ui-grid="gridOptions" ui-grid-selection></div>
+					<% if (user.role == "Zoologist") { %>
 					<div>
 						<button type="button" class="btn btn-success" ng-click="changeKeeper()">Назначить смотрителя</button>
 						<button type="button" class="btn btn-success" ng-click="">Назначить клетку</button>
 					</div>
+					<% } %>
 				</script>
+				<% if (user.role == "Zoologist") {  %>
 				<script type="text/ng-template" id='/changeKeeper.html'>
 					<!-- Name -->
 					<div class="input-group">
@@ -75,10 +78,10 @@
 					</div>
 					<div id="error-block" class="alert alert-danger alert-dismissible" role="alert" hidden="true">
   						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  						Success!
 					</div>
 					<button type="button" class="btn btn-success" ng-click="updateKeeper()">Save</button>
 				</script>
+				<% } %>
 
 				<script type="text/ng-template" id="/import.html">
 					<form ref="uploadForm" id="uploadForm" action="/animals/import" method="POST" enctype="multipart/form-data">

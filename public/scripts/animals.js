@@ -45,7 +45,6 @@
  		$scope.animals.$promise.then(function(value) {
  			angular.forEach(value, function(row) {
  				row.fullname = function() {
- 					console.log(row.keeper);
  					return row.keeper.name + ' ' + row.keeper.first_name;
  				};
  			});
@@ -80,7 +79,9 @@
  					document.getElementById("success-block").hidden = false;
  				})
  				.catch(function (err) {
- 					document.getElementById("error-block").hidden = false;
+ 					var errorBlock = document.getElementById("error-block");
+ 					errorBlock.hidden = false;
+ 					errorBlock.innerHTML = errorBlock.innerHTML + ' ' + err.statusText;
  				});
  		};
 
