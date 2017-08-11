@@ -50,10 +50,6 @@
  			});
  		});
 
- 		$scope.selectedLog = function() {
- 			console.log($scope.gridApi.selection.getSelectedRows());
- 		};
-
  		$scope.currentAnimal = function() {
  			return $scope.gridApi.selection.getSelectedRows();
  		};
