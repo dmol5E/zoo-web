@@ -130,11 +130,65 @@ var animalsInit = new Promise(function(resolve, reject) {
 
 });
 
+var startTestDbConnection = function() {
+	mongoose.connect('mongodb://localhost/zoo-test')
+		.then(() => {
+			console.log('Connection to MongoDB succesful.')
+			var testKeeperInit = new Promise(function(resolve, reject) {
+
+				User.remove({
+					username: 'testKeeper'
+				}, function(err) {});
+				User.register(new User({
+					username: 'testKeeper',
+					name: 'Keeper',
+					role: 'Keeper'
+				}), '12345', function(err, user) {
+					if (err) {
+						reject(err);
+					} else {
+						resolve("User " + user.username + ' registered');
+					}
+				});
+			});
+			var testZoologistInit = new Promise(function(resolve, reject) {
+
+				User.remove({
+					username: 'testZoologist'
+				}, function(err) {});
+				User.register(new User({
+					username: 'testZoologist',
+					name: 'Zoologist',
+					role: 'Zoologist'
+				}), '54321', function(err, user) {
+					if (err) {
+						reject("Error register user: " + err);
+					} else {
+						resolve('User ' + user.username + ' registered');
+					}
+				});
+			});
+			Promise.all([testZoologistInit, testKeeperInit])
+				.then(function(item) {
+					mongoose.connection.close();
+					console.log(item);
+					console.log('Initalization test DB completed!');
+				})
+				.catch(function(err) {
+					mongoose.connection.close();
+					console.error("Errors: " + err);
+				});
+		})
+		.catch((err) => console.error(err))
+};
+
 Promise.all([keepersInit, animalsInit, UserZoologistInit, UserKeeperInit])
 	.then(function(item) {
-		mongoose.connection.close();
+		mongoose.connection.close().then(function() {
+			startTestDbConnection();
+		});
 		console.log(item);
-		console.log('Initalization completed!');
+		console.log('Initalization completed!')
 	})
 	.catch(function(err) {
 		mongoose.connection.close();

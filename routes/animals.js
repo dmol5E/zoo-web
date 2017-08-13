@@ -34,8 +34,6 @@ router.post('/', isRoleZoolgist , function(req, res, next) {
 });
 
 router.post('/import', function(req, res, next) {
-	var response = [];
-	var errors = [];
 	api.importAnimals(req.files.import)
 		.then(function(animals) {
 			res.json(animals);

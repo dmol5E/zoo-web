@@ -4,13 +4,14 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var config = require('config');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var LocalStategy = require('passport-local').Strategy;
 var fileUpload = require('express-fileupload');
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/zoo')
+mongoose.connect(config.DBHost)
 	.then(() => console.log('Connection to MongoDB succesful.'))
 	.catch((err) => console.error(err));
 
@@ -22,13 +23,17 @@ var expts = require('./routes/export.js');
 
 var app = express();
 
+if(config.util.getEnv('NODE_ENV') !== 'test') {
+  app.use(logger('combined'));
+}
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+//app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
