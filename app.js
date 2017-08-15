@@ -9,6 +9,7 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var LocalStategy = require('passport-local').Strategy;
 var fileUpload = require('express-fileupload');
+var auth = require('./security/authentication');
 
 mongoose.Promise = global.Promise;
 mongoose.connect(config.DBHost)
@@ -50,7 +51,7 @@ app.use('/release', express.static(path.join(__dirname, 'node_modules/angular-ui
 app.use('/release', express.static(path.join(__dirname, 'node_modules/ui-select/dist/')));
 
 app.use('/', index);
-app.use(isLoggedIn);
+app.use(auth.isLoggedIn);
 app.use('/animals', animals);
 app.use('/export', expts);
 app.use('/animal', animal);
@@ -80,12 +81,5 @@ app.use(function(err, req, res, next) {
   console.error(err.stack);
   res.render('error');
 });
-
-function isLoggedIn(req, res, next) {
-	if (req.isAuthenticated())
-		return next();
-
-	res.redirect('/');
-}
 
 module.exports = app;

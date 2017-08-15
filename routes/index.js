@@ -1,8 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var auth = require('../api/AuthController');
-
-router.get('/', auth.home);
+var sec = require('../security/authentication');
 
 router.get('/register', auth.register);
 
@@ -13,5 +12,7 @@ router.get('/login', auth.login);
 router.post('/login', auth.doLogin);
 
 router.get('/logout', auth.logout);
+
+router.get('/', sec.isLoggedIn , auth.home);
 
 module.exports = router;

@@ -1,0 +1,4 @@
+
+exports.getMyAnimals = function() {
+
+};
