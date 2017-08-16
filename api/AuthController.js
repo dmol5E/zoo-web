@@ -3,7 +3,16 @@ var passport = require('passport');
 var User = require('../models/User.js');
 
 exports.home = function(req, res) {
-	res.render('index', { user: req.user });
+	if(!req.user) {
+		var error = new Error('You are not authorized');
+		error.status = 403;
+		next(error);
+	} else if (req.user.role === 'Zoologist') {
+		res.render('zoologist', { user: req.user });
+	} else if (req.user.role === 'Keeper') {
+		res.render('keeper', { user: req.user });
+	}
+	//res.render('index', { user: req.user });
 };
 
 exports.register = function(req, res) {

@@ -1,0 +1,16 @@
+extends layouts/basic.pug
+
+block link
+	link(rel='stylesheet', href='/stylesheets/signin.css')
+
+block scripts
+
+block content
+	div(class='container')
+		form(class='form-signin', action='/register', method='POST', role='form')
+			h2(class='form-signin-heading') Sign up
+			label(for='inputUsername', class='sr-only') Login
+			input(class='form-control', type='text', id='inputUsername', name='username', placeholder='Login', required, autofocus)
+			label(for='inputPassword', class='sr-only') Password
+			input(class='form-control', type='password', id='inputPassword', name='password', placeholder='Password', required)
+			button(class='btn btn-lg btn-primary btn-block', type='submit', ) Sign up

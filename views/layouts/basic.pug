@@ -1,0 +1,23 @@
+doctype html
+html
+	head
+		meta(charset='utf-8')
+		meta(http-equiv='X-UA-Compatible' content='IE=edge')
+		meta(name='viewport', content='width=device-width, initial-scale=1')
+		meta(name='description', content='')
+		meta(name='author' content='')
+		title
+		link(href='/release/bootstrap/css/bootstrap.min.css', rel='stylesheet')
+		link(href='/stylesheets/footer.css', rel='stylesheet')
+		block link
+		script(src='/release/jquery/jquery.js')
+		script(src='/release/bootstrap/js/bootstrap.js')
+		block scripts
+	body
+		header
+			block header
+		main
+			block content
+		footer(class='footer')
+			div(class='container')
+				p(class='text-center text-muted') Developed by Dmitrii Olkhov

@@ -1,0 +1,24 @@
+extends layouts/workspace.pug
+
+block link
+	link(href='release/ui-grid.min.css', rel='stylesheet')
+	link(href='release/select.min.css', rel='stylesheet')
+
+block scripts
+	script(src='/release/angular.js')
+	script(src='/release/angular-route.js')
+	script(src='/release/angular-resource.js')
+	script(src='/release/angular-sanitize.js')
+	script(src='/release/ui-grid.min.js')
+	script(src='/release/select.min.js')
+	script(src='/scripts/animals.js')
+
+block content
+	div(class='jumbotron', ng-app='app', ng-controller='AnimalController')
+		ng-view
+		script(type='text/ng-template', id='/view.html')
+			div(class='container')
+				h3 Animal list:
+				p(class='pull-right')
+					a(href='/export/json', class='btn btn-primary btn-lg', role='button') Download
+			div(ui-grid='gridOptions', ui-grid-selection)

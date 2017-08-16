@@ -4,7 +4,7 @@ var nodeExcel = require('excel-export');
 var router = express.Router();
 
 /* GET /animals/file */
-router.get('/', function(req, res, next) {
+router.get('/json', function(req, res, next) {
 	api.findAllWithoutParams('-_id')
 		.then(function(animals) {
 			res.attachment('animal.json');

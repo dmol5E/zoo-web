@@ -27,10 +27,11 @@ var app = express();
 if(config.util.getEnv('NODE_ENV') !== 'test') {
   app.use(logger('combined'));
 }
+app.locals.pretty = true;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.set('view engine', 'pug');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -47,6 +48,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(fileUpload());
 
+// Binding static sources
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/release/bootstrap/', express.static(path.join(__dirname, 'node_modules/bootstrap/dist')));
 app.use('/release/jquery/', express.static(path.join(__dirname, 'node_modules/jquery/dist')));
@@ -57,12 +59,11 @@ app.use('/release', express.static(path.join(__dirname, 'node_modules/angular-sa
 app.use('/release', express.static(path.join(__dirname, 'node_modules/angular-ui-grid/')));
 app.use('/release', express.static(path.join(__dirname, 'node_modules/ui-select/dist/')));
 
+// Create routes
 app.use('/', index);
 app.use(auth.isLoggedIn);
 app.use('/animals', animals);
 app.use('/export', expts);
-app.use('/animal', animal);
-app.use('/users', users);
 
 // Passport config
 var User = require('./models/User');
