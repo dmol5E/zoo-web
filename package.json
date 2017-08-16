@@ -8,8 +8,13 @@
     "test": "mocha"
   },
   "dependencies": {
+    "angular": "^1.6.5",
+    "angular-resource": "^1.6.5",
+    "angular-route": "^1.6.5",
+    "angular-sanitize": "^1.6.5",
     "angular-ui-grid": "^4.0.6",
     "body-parser": "~1.17.1",
+    "bootstrap": "^3.3.7",
     "config": "^1.26.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.3",
@@ -18,6 +23,7 @@
     "express": "^4.15.4",
     "express-fileupload": "^0.1.4",
     "express-session": "^1.15.5",
+    "jquery": "^3.2.1",
     "mongoose": "^4.11.7",
     "mongoose-unique-validator": "^1.0.5",
     "morgan": "~1.8.1",

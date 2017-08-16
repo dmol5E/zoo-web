@@ -46,7 +46,14 @@ app.use(require('express-session')({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(fileUpload());
+
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/release/bootstrap/', express.static(path.join(__dirname, 'node_modules/bootstrap/dist')));
+app.use('/release/jquery/', express.static(path.join(__dirname, 'node_modules/jquery/dist')));
+app.use('/release', express.static(path.join(__dirname, 'node_modules/angular/')));
+app.use('/release', express.static(path.join(__dirname, 'node_modules/angular-route/')));
+app.use('/release', express.static(path.join(__dirname, 'node_modules/angular-resource/')));
+app.use('/release', express.static(path.join(__dirname, 'node_modules/angular-sanitize/')));
 app.use('/release', express.static(path.join(__dirname, 'node_modules/angular-ui-grid/')));
 app.use('/release', express.static(path.join(__dirname, 'node_modules/ui-select/dist/')));
 
