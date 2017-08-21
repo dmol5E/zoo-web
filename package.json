@@ -4,14 +4,16 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "postinstall": "node ./bin/initdb",
+    "initdb": "node initdb.js",
     "test": "mocha"
   },
   "dependencies": {
     "angular": "^1.6.5",
+    "angular-animate": "^1.6.6",
     "angular-resource": "^1.6.5",
     "angular-route": "^1.6.5",
     "angular-sanitize": "^1.6.5",
+    "angular-touch": "^1.6.6",
     "angular-ui-grid": "^4.0.6",
     "body-parser": "~1.17.1",
     "bootstrap": "^3.3.7",
@@ -30,6 +32,7 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^4.1.0",
+    "pdfmake": "^0.1.32",
     "pug": "^2.0.0-rc.3",
     "serve-favicon": "~2.4.2",
     "supertest": "^3.0.0",

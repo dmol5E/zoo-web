@@ -1,4 +1,5 @@
 var api = require('../api/animal_api.js');
+var keeper = require('../api/keeper.js');
 var express = require('express');
 var router = express.Router();
 
@@ -13,7 +14,8 @@ var isRoleZoolgist = function(req, res, next) {
 
 /* GET /animals */
 router.get('/', function(req, res, next) {
-	api.findAll()
+	console.log(req.user);
+	keeper.getMyAnimals(req.user)
 		.then(function(animals) {
 			res.json(animals);
 		})

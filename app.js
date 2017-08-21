@@ -17,10 +17,9 @@ mongoose.connect(config.DBHost)
 	.catch((err) => console.error(err));
 
 var index = require('./routes/index');
-var users = require('./routes/users');
 var animals = require('./routes/animals');
-var animal = require('./routes/animal.js');
 var expts = require('./routes/export.js');
+var keeper = require('./routes/keeper.js');
 
 var app = express();
 
@@ -52,16 +51,21 @@ app.use(fileUpload());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/release/bootstrap/', express.static(path.join(__dirname, 'node_modules/bootstrap/dist')));
 app.use('/release/jquery/', express.static(path.join(__dirname, 'node_modules/jquery/dist')));
-app.use('/release', express.static(path.join(__dirname, 'node_modules/angular/')));
-app.use('/release', express.static(path.join(__dirname, 'node_modules/angular-route/')));
-app.use('/release', express.static(path.join(__dirname, 'node_modules/angular-resource/')));
-app.use('/release', express.static(path.join(__dirname, 'node_modules/angular-sanitize/')));
-app.use('/release', express.static(path.join(__dirname, 'node_modules/angular-ui-grid/')));
-app.use('/release', express.static(path.join(__dirname, 'node_modules/ui-select/dist/')));
+app.use('/release/angular/', express.static(path.join(__dirname, 'node_modules/angular/')));
+app.use('/release/angular/route/', express.static(path.join(__dirname, 'node_modules/angular-route/')));
+app.use('/release/angular/resource/', express.static(path.join(__dirname, 'node_modules/angular-resource/')));
+app.use('/release/angular/sanitize/', express.static(path.join(__dirname, 'node_modules/angular-sanitize/')));
+app.use('/release/angular/ui-grid/', express.static(path.join(__dirname, 'node_modules/angular-ui-grid/')));
+app.use('/release/angular/animate/', express.static(path.join(__dirname, 'node_modules/angular-animate/')));
+app.use('/release/', express.static(path.join(__dirname, 'node_modules/pdfmake/build/')));
+app.use('/release/angular/select/', express.static(path.join(__dirname, 'node_modules/ui-select/dist/')));
+app.use('/release/angular/touch/', express.static(path.join(__dirname, 'node_modules/angular-touch/')));
 
 // Create routes
 app.use('/', index);
 app.use(auth.isLoggedIn);
+app.use('/keeper', keeper);
+//app.use('/zoologist', zoologist);
 app.use('/animals', animals);
 app.use('/export', expts);
 

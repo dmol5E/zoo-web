@@ -1,24 +1,33 @@
 extends layouts/workspace.pug
 
 block link
-	link(href='release/ui-grid.min.css', rel='stylesheet')
-	link(href='release/select.min.css', rel='stylesheet')
+	link(href='release/angular/ui-grid/ui-grid.min.css', rel='stylesheet')
+	link(href='release/angular/select/select.min.css', rel='stylesheet')
 
 block scripts
-	script(src='/release/angular.js')
-	script(src='/release/angular-route.js')
-	script(src='/release/angular-resource.js')
-	script(src='/release/angular-sanitize.js')
-	script(src='/release/ui-grid.min.js')
-	script(src='/release/select.min.js')
-	script(src='/scripts/animals.js')
+	script(src='/release/angular/angular.js')
+	script(src='/release/angular/route/angular-route.js')
+	script(src='/release/angular/ui-grid/ui-grid.js')
+	script(src='/release/angular/select/select.js')
+	script(src='/release/angular/animate/angular-animate.js')
+	script(src='/release/angular/touch/angular-touch.js')
+	script(src='/release/pdfmake.js')
+	script(src='/release/vfs_fonts.js')
+	script(src='/scripts/keeper.js')
 
 block content
-	div(class='jumbotron', ng-app='app', ng-controller='AnimalController')
-		ng-view
-		script(type='text/ng-template', id='/view.html')
-			div(class='container')
-				h3 Animal list:
-				p(class='pull-right')
-					a(href='/export/json', class='btn btn-primary btn-lg', role='button') Download
-			div(ui-grid='gridOptions', ui-grid-selection)
+	div(class='jumbotron', ng-app='app', ng-controller='KeeperController')
+		div(class='container')
+			h3 Animal list:
+			p(class='pull-right')
+			div(class='btn-group pull-right' role='group')
+				button(type='button', class='btn btn-primary btn-lg dropdown-toggle', data-toggle='dropdown'
+					aria-haspopup='true', aria-expanded='false') Export to
+					span(class='caret')
+				ul(class='dropdown-menu')
+					li
+						a(href='#', ng-click='exportToPdf()') PDF
+					li
+						a(href='#', ng-click='exportToCsv()') CSV
+
+		div(ui-grid='gridOptions', ui-grid-selection, ui-grid-exporter, ui-grid-move-columns)

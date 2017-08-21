@@ -12,7 +12,7 @@ var AnimalSchema = Schema({
 	species: String,
 	age: Number,
 	cage: String,
-	keeper: { type: Schema.ObjectId, ref: 'Keeper'}
+	keeper: { type: Schema.ObjectId, ref: 'User' }
 });
 
 AnimalSchema.plugin(uniqueValidator);
